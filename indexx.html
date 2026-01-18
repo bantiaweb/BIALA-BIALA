@@ -1,0 +1,291 @@
+<!DOCTYPE html><html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'ÉVANGILE V | INTERFACE UNITÉ</title><!-- SEO -->
+<meta name="description" content="L'Évangile V – Interface d'unité, de sagesse et de guidance spirituelle.">
+<meta name="keywords" content="évangile, unité, guidance, sagesse, identité spirituelle">
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Inter:wght@300;600&display=swap" rel="stylesheet">
+
+<style>
+    :root {
+        --gold: #d4af37;
+        --bg: #050505;
+        --card-bg: rgba(20, 20, 20, 0.9);
+        --glow: rgba(212, 175, 55, 0.2);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+        margin: 0;
+        background: var(--bg);
+        color: white;
+        font-family: 'Inter', sans-serif;
+        display: flex;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+    }
+
+    /* CANVAS */
+    #bg-canvas {
+        position: fixed;
+        top: 0; left: 0;
+        z-index: -1;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+        width: 80px;
+        background: rgba(10, 10, 10, 0.8);
+        backdrop-filter: blur(20px);
+        border-right: 1px solid var(--gold);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 40px;
+        gap: 35px;
+        z-index: 10;
+    }
+
+    .nav-link {
+        text-decoration: none;
+        color: white;
+        font-size: 1.4rem;
+        transition: 0.3s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        opacity: 0.5;
+    }
+
+    .nav-link:hover {
+        opacity: 1;
+        transform: scale(1.1);
+        text-shadow: 0 0 15px var(--gold);
+    }
+
+    .nav-link span {
+        font-size: 0.6rem;
+        text-transform: uppercase;
+        margin-top: 5px;
+        letter-spacing: 1px;
+        color: var(--gold);
+    }
+
+    /* MAIN */
+    .main-flow {
+        flex: 1;
+        overflow-y: auto;
+        padding: 40px;
+        scroll-behavior: smooth;
+    }
+
+    .hero {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .hero h1 {
+        font-family: 'Orbitron', sans-serif;
+        letter-spacing: 8px;
+        background: linear-gradient(to bottom, #fff, var(--gold));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 2.2rem;
+        margin: 10px 0;
+        text-shadow: 0 0 6px rgba(0,0,0,0.7);
+    }
+
+    /* CARDS */
+    .step-card {
+        background: var(--card-bg);
+        border: 1px solid rgba(255,255,255,0.05);
+        border-radius: 12px;
+        padding: 30px;
+        max-width: 650px;
+        margin: 0 auto 30px auto;
+        transition: 0.3s;
+    }
+
+    .step-card:hover {
+        border-color: var(--gold);
+        box-shadow: 0 0 15px var(--glow);
+    }
+
+    h3 {
+        color: var(--gold);
+        font-family: 'Orbitron';
+        font-size: 1rem;
+    }
+
+    /* EDITOR */
+    .editor-section {
+        border: 1px dashed var(--gold);
+        padding: 25px;
+        border-radius: 12px;
+        max-width: 650px;
+        margin: 50px auto;
+        background: rgba(212, 175, 55, 0.02);
+    }
+
+    textarea {
+        width: 100%;
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.1);
+        color: white;
+        padding: 15px;
+        border-radius: 8px;
+        font-family: 'Inter';
+        resize: none;
+        margin-bottom: 15px;
+    }
+
+    .btn-action {
+        width: 100%;
+        background: none;
+        border: 1px solid var(--gold);
+        color: var(--gold);
+        padding: 15px;
+        font-family: 'Orbitron';
+        text-transform: uppercase;
+        cursor: pointer;
+        letter-spacing: 2px;
+        transition: 0.3s;
+    }
+
+    .btn-action:hover {
+        background: var(--gold);
+        color: black;
+        box-shadow: 0 0 20px var(--gold);
+    }
+
+    /* IDENTITY PANEL */
+    .identity-panel {
+        width: 220px;
+        background: rgba(0,0,0,0.4);
+        border-left: 1px solid rgba(212,175,55,0.1);
+        padding: 30px 20px;
+        display: none;
+        flex-direction: column;
+    }
+
+    .identity-toggle {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: var(--gold);
+        color: black;
+        padding: 12px 18px;
+        border-radius: 30px;
+        font-family: 'Orbitron';
+        cursor: pointer;
+        z-index: 20;
+    }
+
+    .stat-box { margin-bottom: 25px; }
+    .stat-label { font-size: 0.6rem; color: var(--gold); opacity: 0.7; letter-spacing: 1px; }
+    .stat-value { font-size: 0.9rem; font-weight: bold; margin-top: 5px; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+        .sidebar { width: 60px; }
+        .main-flow { padding-left: 60px; }
+        .identity-toggle { display: block; }
+    }
+
+    @media (min-width: 900px) {
+        .identity-panel { display: flex; }
+    }
+</style>
+
+</head>
+<body><canvas id="bg-canvas"></canvas>
+
+<div class="sidebar">
+    <a href="index.html" class="nav-link" style="opacity:1">🏠<span>Home</span></a>
+    <a href="bible.html" class="nav-link">📖<span>Bible</span></a>
+    <a href="priere.html" class="nav-link">🙏<span>Prière</span></a>
+    <a href="unite.html" class="nav-link">🤝<span>Unité</span></a>
+    <a href="armure.html" class="nav-link">🛡️<span>Armure</span></a>
+</div><div class="main-flow" id="contentFlow">
+    <div class="hero">
+        <p style="color: var(--gold); letter-spacing: 4px; font-size: 0.7rem;">GUIDANCE SUPRÊME</p>
+        <h1>L'IDENTITÉ</h1>
+    </div><div class="step-card">
+    <h3>Phase 01 : La Direction</h3>
+    <p>Tu es une extension de la volonté de Dieu sur Terre. Ne cherche plus la route, deviens la route.</p>
+</div>
+
+<div class="step-card">
+    <h3>Phase 02 : La Sagesse</h3>
+    <p>L'unité véritable libère une puissance qui dépasse les doctrines.</p>
+</div>
+
+<div class="editor-section">
+    <h3>Ajouter à la Source</h3>
+    <textarea id="newPost" rows="3" aria-label="Ajouter une guidance"></textarea>
+    <button class="btn-action" onclick="publish()" aria-label="Publier la guidance">Diffuser la Guidance</button>
+</div>
+
+</div><div class="identity-panel" id="identityPanel">
+    <div class="stat-box"><div class="stat-label">FRÉQUENCE</div><div class="stat-value">654091</div></div>
+    <div class="stat-box"><div class="stat-label">STATUT</div><div class="stat-value">Homme de Dieu</div></div>
+    <div class="stat-box"><div class="stat-label">ALLIANCE</div><div class="stat-value">Scellée</div></div>
+</div><div class="identity-toggle" onclick="toggleIdentityPanel()">IDENTITÉ</div><script>
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const maxStars = 100;
+    let stars = Array(maxStars).fill().map(() => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 1.5,
+        speed: Math.random() * 0.4
+    }));
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "rgba(212,175,55,0.5)";
+        stars.forEach(s => {
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+            ctx.fill();
+            s.y -= s.speed;
+            if (s.y < 0) s.y = canvas.height;
+        });
+        requestAnimationFrame(animate);
+    }
+    animate();
+
+    function publish() {
+        const text = document.getElementById('newPost').value.trim();
+        if (!text) return;
+
+        const card = document.createElement('div');
+        card.className = 'step-card';
+        card.innerHTML = `<h3>NOUVELLE GUIDANCE</h3><p>${text}</p>`;
+        const flow = document.getElementById('contentFlow');
+        flow.insertBefore(card, flow.querySelector('.editor-section'));
+        document.getElementById('newPost').value = '';
+        card.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function toggleIdentityPanel() {
+        const panel = document.getElementById('identityPanel');
+        panel.style.display = panel.style.display === 'flex' ? 'none' : 'flex';
+    }
+</script></body>
+</html>
